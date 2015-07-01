@@ -15,19 +15,29 @@ class ofxSheetItem : public ofxSheetComponent
 {
 
 public:
-	ofxSheetItem(ofxSheetComponent * componentLink);
+	ofxSheetItem(ofxSheetComponent *componentLink);
 	virtual ~ofxSheetItem();
 
-	virtual void draw();
+	void draw() override;
 	void moveBack();
 	void moveBackwards();
 	void moveFront();
 	void moveFrontwards();
 
+	ofColor GetColor(){return color;}
+	ofxSheetComponent * GetComponent(){return component;}
+	ofxItemVisibilityStyle* GetVisibilityStyle(){	return m_ofxItemVisibilityStyle;}
+	void SetColor(ofColor newVal){color = newVal;}
+	void SetComponent(ofxSheetComponent *newVal){component = newVal;}
+	void SetVisibilityStyle(ofxItemVisibilityStyle* newVal){m_ofxItemVisibilityStyle = newVal;}
+
+
+
 private:
 	ofxItemVisibilityStyle *m_ofxItemVisibilityStyle;
-	ofxSheetComponent* component;
+	ofxSheetComponent *component;
 	int drawLevel;
+	ofColor color;
 
 };
 #endif // !defined(EA_8793D2FD_9A4C_401c_8A1A_994DBB96EDD0__INCLUDED_)

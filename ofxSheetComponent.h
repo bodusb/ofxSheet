@@ -38,15 +38,17 @@ public:
 
 	// Macro changes
 	void scale(float newFactor){ form.scale(newFactor);}
-	void translate(int x, int y){ form.translate(x,y);}
-	void translate(ofPoint newPostion){ form.translate(newPostion);}
+	virtual void translate(float x, float y){ form.translate(x,y);}
+	virtual void translate(ofPoint newPostion){ form.translate(newPostion);}
 
-	bool isInside( ofPoint point) { return form.inside(point);}
+	virtual ofxSheetComponent* isInside( ofPoint point) { 
+		return form.inside(point) ? this : NULL ;}
 
 
 
 protected:
 	ofRectangle form;
+	ofPoint toReference;
 	void drawContour();
 
 };

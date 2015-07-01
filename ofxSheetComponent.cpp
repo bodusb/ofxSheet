@@ -27,11 +27,15 @@ void ofxSheetComponent::drawContour(){
 
 	ofSetColor(ofColor::black);
 	ofNoFill();
-	ofLine(form.x,form.y,form.x + form.width, form.y);
-	ofLine(form.x,form.y,form.x, form.y + form.height);
+	ofLine(	this->form.getTopLeft().x, this->form.getTopLeft().y, 
+			this->form.getTopLeft().x + form.width, this->form.getTopLeft().y);
+	ofLine(	this->form.getTopLeft().x, this->form.getTopLeft().y, 
+			this->form.getTopLeft().x, this->form.getTopLeft().y + form.height);
 
-	ofLine(form.x + form.width, form.y + form.height, form.x, form.y + form.height);
-	ofLine(form.x + form.width, form.y + form.height, form.x + form.width, form.y);
+	ofLine(	this->form.getTopLeft().x + form.width, this->form.getTopLeft().y + form.height, 
+			this->form.getTopLeft().x, this->form.getTopLeft().y + form.height);
+	ofLine(	this->form.getTopLeft().x + form.width, this->form.getTopLeft().y + form.height, 
+			this->form.getTopLeft().x + form.width, this->form.getTopLeft().y);
 
 	ofPopMatrix();
 	ofPopStyle();
