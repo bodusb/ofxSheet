@@ -12,6 +12,16 @@ ofxSheetComponent::ofxSheetComponent(){
 }
 
 
+ofxSheetComponent::ofxSheetComponent(ComponentType newType) {
+
+	this->type = newType;
+
+	static int _id = 0; 
+	id = _id++;
+
+}
+
+
 
 ofxSheetComponent::~ofxSheetComponent(){
 

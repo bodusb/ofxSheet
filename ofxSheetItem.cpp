@@ -7,14 +7,10 @@
 
 #include "ofxSheetItem.h"
 
-ofxSheetItem::~ofxSheetItem(){
-
-	this->form.standardize();
-
-}
 
 
-ofxSheetItem::ofxSheetItem(ofxSheetComponent * componentLink){
+
+ofxSheetItem::ofxSheetItem(ofxSheetComponent * componentLink) : ofxSheetComponent(ComponentType::sheetItem){
 	
 	this->form.standardize();
 
@@ -22,6 +18,9 @@ ofxSheetItem::ofxSheetItem(ofxSheetComponent * componentLink){
 
 }
 
+ofxSheetItem::~ofxSheetItem() {
+
+}
 
 void ofxSheetItem::draw(){
 	//ofLogVerbose("[ITEM][DRAW]") << "Draw item";
@@ -29,11 +28,16 @@ void ofxSheetItem::draw(){
 	ofPushMatrix();
 	ofPushStyle();
 
-		ofSetColor(this->color);
+		ofSetColor(this->color,128);
 		ofDrawPlane(form.getCenter(),form.width,form.width);
 			
 	ofPopStyle();
 	ofPopMatrix();
+
+	this->drawContour();
+
+	ofSetColor(ofColor::black);
+	ofDrawBitmapStringHighlight( ofToString(this->id), form.getTopLeft());
 }
 
 

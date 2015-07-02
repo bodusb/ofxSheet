@@ -51,6 +51,8 @@ public:
 	// Sheet Items
 	vector<ofxSheetComponent *> m_itemList;	
 	void createItem();
+	bool removeItem(ofxSheetComponent* comp);
+
 private:
 	bool			grid;
 	ofColor			sheetColor;

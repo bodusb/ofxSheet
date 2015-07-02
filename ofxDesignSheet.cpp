@@ -8,7 +8,7 @@
 #include "ofxDesignSheet.h"
 
 
-ofxDesignSheet::ofxDesignSheet(){
+ofxDesignSheet::ofxDesignSheet() : ofxSheetComponent(ComponentType::sheetItem){
 
 	this->form.set(0,0,210,219);
 	this->form.standardize();
@@ -17,46 +17,43 @@ ofxDesignSheet::ofxDesignSheet(){
 }
 
 
-
 ofxDesignSheet::~ofxDesignSheet(){
+
+	this->m_itemList.clear();
 
 }
 
 
-
-
-
 void ofxDesignSheet::draw(){
 
-	ofPushMatrix();
 	ofPushStyle();
+	ofPushMatrix();
 
-	// Draw sheet backgorund
-	ofSetColor(ofColor::white);
+	ofSetLineWidth(5);
+	ofSetColor(ofColor::green);
+	ofLine(this->form.getTopLeft(),ofPoint(this->form.getTopLeft().x + 50,this->form.getTopLeft().y));
+
+	ofSetColor(ofColor::red);
+	ofLine(this->form.getTopLeft(),ofPoint(this->form.getTopLeft().x,this->form.getTopLeft().y + 50));
+
+	ofSetColor(ofColor::blue);
 	ofFill();
-	ofDrawPlane(this->form.getTopLeft().x,this->form.getTopLeft().y,this->getWidth(),this->getHeight());
+	ofCircle(this->form.getTopLeft(),5);
 
-	ofPopStyle();
+	
 	ofPopMatrix();
-	
+	ofPopStyle();
 
-	// Draw Sheet Contour
-	this->drawContour();
-	
 	// Draw Grid 
 	//if(grid) this->drawGrid(10,10);
 
 
 	// Draw componentes
-
-	auto itSI = this->m_itemList.begin(); // create iterator
 	for( auto & item : m_itemList ) {
 		item->draw();
 	}
 
 }
-
-
 
 
 void ofxDesignSheet::drawGrid(int x, int y){
@@ -88,16 +85,42 @@ void ofxDesignSheet::createItem(){
 	ofxSheetItem *n = new ofxSheetItem(this);
 	n->setRectangle(ofRectangle(ofGetMouseX(),ofGetMouseY(),100,100));
 	n->SetColor(ofColor::red);
-	this->m_itemList.push_back(n);
+	ofLogVerbose() << "current: " + ofToString( n->getID() );
 
+	//if( !m_itemList.empty())
+	//ofLogVerbose() << "last: " + ofToString( (*this->m_itemList.end())->getID() );
+
+	this->m_itemList.push_back(n);
 }
+
+
+bool ofxDesignSheet::removeItem(ofxSheetComponent* comp){
+
+	int counter = 0;
+
+	for( auto & item : m_itemList ) {
+		if( item->getID() == comp->getID()) {	
+			break;
+		}
+		counter++;
+	}
+
+
+	if ( this->m_itemList.empty() || counter == this->m_itemList.size()){
+	return false;
+	} else {
+		this->m_itemList.erase( this->m_itemList.begin() + counter);
+
+	}
+	return false;
+}
+
 
 void ofxDesignSheet::translate(float x, float y){
 
 	this->form.x += x;
 	this->form.y += y;
 
-	auto itSI = this->m_itemList.begin(); // create iterator
 	for( auto & item : m_itemList ) {
 		item->setX( item->getX() + x );
 		item->setY( item->getY() + y );
@@ -105,13 +128,12 @@ void ofxDesignSheet::translate(float x, float y){
 }
 
 void ofxDesignSheet::translate(ofPoint newPosition){
-	ofLogVerbose("[DESIGNSHEET]") << "translate";
+	//ofLogVerbose("[DESIGNSHEET]") << "translate";
 	this->form.x += newPosition.x;
 	this->form.y += newPosition.y;
 
-	auto itSI = this->m_itemList.begin(); // create iterator
 	for( auto & item : m_itemList ) {
-		ofLogVerbose("[DESIGNSHEET]") << "translate item";
+		//ofLogVerbose("[DESIGNSHEET]") << "translate item";
 		item->setX( item->getX() + newPosition.x );
 		item->setY( item->getY() + newPosition.y );
 	}
@@ -120,11 +142,10 @@ void ofxDesignSheet::translate(ofPoint newPosition){
 
 ofxSheetComponent* ofxDesignSheet::isInside( ofPoint point){
 
-	auto itSI = this->m_itemList.begin(); // create iterator
-	for( auto & item : m_itemList ) {
-		if ( item->isInside(point)){
+	for( auto & item : m_itemList ) 
+		if( item->isInside(point)) 
 			return item;
-		}
-	}
+
 	return NULL;
 }
+

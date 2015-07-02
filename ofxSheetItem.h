@@ -15,7 +15,7 @@ class ofxSheetItem : public ofxSheetComponent
 {
 
 public:
-	ofxSheetItem(ofxSheetComponent *componentLink);
+	ofxSheetItem(ofxSheetComponent *componentLink) ;
 	virtual ~ofxSheetItem();
 
 	void draw() override;

@@ -11,11 +11,14 @@
 #include "ofMain.h"
 
 
-class ofxSheetComponent
-{
+enum ComponentType{
+	designSheet, sheetItem };
+
+class ofxSheetComponent{
 
 public:
 	ofxSheetComponent();
+	ofxSheetComponent(ComponentType newType);
 	virtual ~ofxSheetComponent();
 
 	virtual void draw() = 0;
@@ -44,9 +47,13 @@ public:
 	virtual ofxSheetComponent* isInside( ofPoint point) { 
 		return form.inside(point) ? this : NULL ;}
 
+	void setID(int newValue) { id = newValue;};
+	int getID() {return id;};
 
 
 protected:
+	int id;
+	ComponentType type;
 	ofRectangle form;
 	ofPoint toReference;
 	void drawContour();
