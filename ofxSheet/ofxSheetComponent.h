@@ -9,25 +9,26 @@
 #define EA_1DA943C3_3234_48fb_A839_A565C76A9516__INCLUDED_
 
 #include "ofMain.h"
-
-
-enum ComponentType{
-	designSheet, sheetItem };
+#include "ofxSheetDefines.h"
 
 class ofxSheetComponent{
 
 public:
 	ofxSheetComponent();
-	ofxSheetComponent(ComponentType newType);
+	ofxSheetComponent(ofxComponentType newType);
 	virtual ~ofxSheetComponent();
 
 	virtual void draw() = 0;
 
+	virtual void translate(float x, float y){ form.translate(x,y);}
+	virtual void translate(ofPoint newPostion){ form.translate(newPostion);}
+	virtual ofxSheetComponent* isInside( ofPoint point) { return form.inside(point) ? this : NULL ;}
 
+	ofxComponentType getType() {return this->type;};
 
 	// Get/Set Proprieties
 	float getHeight(){ return form.height;}
-	ofRectangle getRectangle(){ 	return  this->form;}
+	ofRectangle getRectangle(){ return  this->form;}
 	float getWidth(){ return form.width;}
 	float getX(){ return form.x;}
 	float getY(){ return form.y;}
@@ -40,22 +41,20 @@ public:
 	void setY(float newY){ form.y = newY;}
 
 	// Macro changes
-	void scale(float newFactor){ form.scale(newFactor);}
-	virtual void translate(float x, float y){ form.translate(x,y);}
-	virtual void translate(ofPoint newPostion){ form.translate(newPostion);}
-
-	virtual ofxSheetComponent* isInside( ofPoint point) { 
-		return form.inside(point) ? this : NULL ;}
-
+	virtual void scale(float newFactor){ form.scale(newFactor);}
 	void setID(int newValue) { id = newValue;};
 	int getID() {return id;};
 
+	ofColor				getColor(){ return color;};
+	void				setColor(ofColor newVal){ color = newVal; };
 
 protected:
 	int id;
-	ComponentType type;
+	ofxComponentType type;
 	ofRectangle form;
 	ofPoint toReference;
+	ofColor color;
+
 	void drawContour();
 
 };

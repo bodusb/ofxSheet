@@ -12,7 +12,7 @@ ofxSheetComponent::ofxSheetComponent(){
 }
 
 
-ofxSheetComponent::ofxSheetComponent(ComponentType newType) {
+ofxSheetComponent::ofxSheetComponent(ofxComponentType newType) {
 
 	this->type = newType;
 
@@ -36,6 +36,7 @@ void ofxSheetComponent::drawContour(){
 	ofPushMatrix();
 
 	ofSetColor(ofColor::black);
+	ofSetLineWidth(1);
 	ofNoFill();
 	ofLine(	this->form.getTopLeft().x, this->form.getTopLeft().y, 
 			this->form.getTopLeft().x + form.width, this->form.getTopLeft().y);
