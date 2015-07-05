@@ -1,6 +1,8 @@
 # ofxSheet
 openFrameworks addon to handle blank design areas to put your components.
 
+what it does: https://youtu.be/WwU1c3z3A5c
+
 This is far from a complete example. 
 It't just to give some starting ideias, when managing graph itens.
 
