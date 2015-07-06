@@ -30,12 +30,6 @@ public:
 	ofxSheetItem* getNode1() { return node1;};
 	ofxSheetItem* getNode2() { return node2;};
 
-//	void setNode1Position(ofPoint position) { node1Position = position;};
-//	void setNode2Position(ofPoint position) { node2Position = position;};
-
-//	ofPoint getNode1Position() { return node1Position;};
-//	ofPoint getNode2Position() { return node2Position;};
-
 	void	setLineStyle( ofxRelationStyle newStyle) { lineStyle = newStyle;};
 	void	setRelationDirection ( ofxRelationDirection newDirection) { direction = newDirection;};
 
@@ -47,10 +41,12 @@ private:
 	ofxSheetItem* node1;
 	ofPoint node1LastPosition;
 
+	ofPoint meanNodes;
+
 	ofxSheetItem* node2;
 	ofPoint node2LastPosition;
 
-	ofxRelationStyle		lineStyle;
+	ofxRelationStyle	lineStyle;
 	ofxRelationDirection	direction;
 
 	ofPolyline line;
