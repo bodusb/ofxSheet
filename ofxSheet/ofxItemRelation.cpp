@@ -19,7 +19,7 @@ ofxItemRelation::ofxItemRelation(ofxSheetComponent *componentLink) : ofxSheetCom
 	this->setColor(ofColor::black);
 
 	this->direction = ofxRelationDirection::OFX_SHEET_DIRECTION_NON;
-	this->lineStyle = ofxRelationStyle::OFX_SHEET_RELATION_DIRECT;
+	this->lineStyle = ofxRelationStyle::OFX_SHEET_RELATION_BELZIER;
 
 	form.set(0,0,20,20);
 
@@ -49,7 +49,17 @@ void ofxItemRelation::draw() {
 
 	line.clear();
 	line.addVertex(node1LastPosition);
-	line.addVertex(node2LastPosition);
+
+
+	if( this->lineStyle == ofxRelationStyle::OFX_SHEET_RELATION_DIRECT){
+
+		line.addVertex(node2LastPosition);
+	} else if( this->lineStyle == ofxRelationStyle::OFX_SHEET_RELATION_BELZIER){
+		// adjust belzier
+		meanNodes.set( (node2LastPosition.x + node1LastPosition.x)/2 , (node2LastPosition.y + node1LastPosition.y)/2 ); 
+		line.bezierTo( ofPoint(meanNodes.x,node1LastPosition.y), ofPoint(meanNodes.x,node2LastPosition.y),node2LastPosition);
+	}
+
 
 	
 
